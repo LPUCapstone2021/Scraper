@@ -1,0 +1,234 @@
+enum FuelType {
+  PETROL
+  DISEAL
+  LPG
+  CNG
+  ELECTRIC
+}
+
+enum TransmissionType {
+  MANUAL
+  AUTOMATIC
+  CVT
+}
+
+enum Terrain {
+  ARAI
+  CITY
+  HIGHWAY
+}
+
+enum PriceType {
+  ON_ROAD
+  EX_SHOWROOM
+}
+
+enum CurrencyType {
+  LAKH
+  CRORE
+}
+
+scalar Url
+scalar Timestamp
+
+type Review {
+  name: String
+  date: String
+  message: String
+}
+
+type Faq {
+  question: String
+  answer: String
+}
+
+type Argument {
+  pros: [String]
+  cons: [String]
+}
+
+type Range {
+  max: Float
+  min: Float
+}
+
+type PowerUnit {
+  unit: String
+}
+
+type FuelEconomy {
+  unit: String
+}
+
+type Quantity {
+  unit: String
+}
+
+type VolumeUnit {
+  unit: String
+}
+
+type LengthUnit {
+  unit: String
+}
+
+type Interior {
+  seat(unit: Quantity): Int
+  boot_space(unit: VolumeUnit = LITERS): Int
+  doors(unit: Quantity): Int
+  fuel_capacity(unit: VolumeUnit = LITERS): Int
+}
+
+type Exterior {
+  length(unit: LengthUnit = CUBIC_MILLIMETER): Float
+  width(unit: LengthUnit = CUBIC_MILLIMETER): Float
+  height(unit: LengthUnit = CUBIC_MILLIMETER): Float
+  wheelbase(unit: LengthUnit = MILLIMETER): Int
+}
+
+type Dimensions {
+  interior: Interior
+  exterior: Exterior
+}
+
+interface Specification {
+  """
+  e.g 998 cc - 1197 cc
+  """
+  engine(unit: PowerUnit = CUBIC_CENTIMETER, type: Int): Range
+
+  """
+  e.g 7 Speed DCT
+  """
+  gear_box: String
+
+  """
+  Emission Norm Compliance. e.g: BS VI
+  """
+  emission: Float
+  mileage(unit: Terrain, unit: FuelEconomy = KILOMETERS_PER_LITRE): Float
+
+  """
+  e.g 118.36bhp
+  """
+  power(unit: PowerUnit = BRAKE_HORSEPOWER, type: Float): Range
+
+  """
+  e.g 171.62nm
+  """
+  torque(unit: PowerUnit = NEWTON_METRE, type: Float): Range
+
+  """
+  Interior and Exterior dimensions related to the car
+  """
+  dimensions: Dimensions
+
+  """
+  e.g petrol
+  """
+  fuel: [FuelType]
+
+  """
+  e.g manual
+  """
+  transmission: [TransmissionType]
+}
+
+interface Price {
+  """
+  e.g On-Road or Ex-Showroom
+  """
+  type: PriceType
+
+  """
+  e.g Lakh, Crore
+  """
+  currency(unit: CurrencyType): String
+
+  """
+  City in which this price is calculated
+  """
+  city: String
+
+  """
+  car prize range. e.g 4.85 - 6.84
+  """
+  range: Range
+}
+
+type Car implements Specification & Price {
+  """
+  Unique Id associated with the car
+  """
+  id: ID!
+
+  """
+  car name. e.g Tiago
+  """
+  name: String!
+
+  """
+  car description
+  """
+  description: String
+
+  """
+  car brand or company name. e.g Tata
+  """
+  brand: String
+
+  """
+  url for the image of the car
+  """
+  img: Url
+
+  """
+  Car Waiting Period
+  """
+  waiting: Timestamp
+
+  """
+  e.g i20 Magna, i20 Sportz, i20 Sportz DT
+  """
+  variants: [Car]
+
+  """
+  Color avaiable for car
+  """
+  colors: [String]
+
+  """
+  Car features
+  """
+  features: [String]
+
+  """
+  Car available in the market or not
+  """
+  available: Boolean
+
+  """
+  Car star rating out of 5
+  """
+  rating: Int
+
+  """
+  Car Reviews by customers
+  """
+  reviews: [Review]!
+
+  """
+  faq related to car
+  """
+  faqs: [Faq]
+
+  """
+  Car arguments
+  """
+  arguments: [Argument]
+
+  """
+  refrence urls like news, video, etc.
+  """
+  refrences: [String]
+}
