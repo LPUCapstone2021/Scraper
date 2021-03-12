@@ -1,11 +1,6 @@
-# yield scrapy.Request(url, callback=self.parse_car, cb_kwargs={'car_route': car_route})
-
-
-
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
-# from scrapy.loader import ItemLoader
 from Scraper.items import ScraperItem
 from w3lib.html import remove_tags
 
