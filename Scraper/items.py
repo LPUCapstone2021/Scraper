@@ -20,7 +20,6 @@ def extract_rating(stars):
     return rating[1::]
 
 class ScraperItem(scrapy.Item):
-	# define the fields for your item here like:
 	brand = scrapy.Field()
 	reviews = scrapy.Field()
 	name = scrapy.Field()
