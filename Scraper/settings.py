@@ -14,7 +14,8 @@ NEWSPIDER_MODULE = 'Scraper.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0'
+# http://www.useragentstring.com/pages/useragentstring.php
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -31,10 +32,10 @@ ROBOTSTXT_OBEY = True
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
-#TELNETCONSOLE_ENABLED = False
+TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
 #DEFAULT_REQUEST_HEADERS = {
