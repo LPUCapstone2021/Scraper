@@ -29,6 +29,7 @@ class CardekhoSpider(CrawlSpider):
             #     'user': remove_tags(review.css('.authorSummary .name').get())[3:],
             #     'date': remove_tags(review.css('.authorSummary .date').get()).split("|")[0].strip()
             # }
+            # item['rating'] = extract_rating(review.css('div.rating span'))
             item['review_title'] = review.css('h3 a::text').get()
             item['review_content'] = review.css('p::text').get().strip("\n")
             item['review_user'] = remove_tags(review.css('.authorSummary .name').get())[3:]
