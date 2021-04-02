@@ -1,15 +1,13 @@
 import scrapy
-from itemloaders.processors import TakeFirst, MapCompose, Join
+from itemloaders.processors import TakeFirst, MapCompose
 from w3lib.html import remove_tags, replace_escape_chars
-import re
-
-def extract_brand(route):
-	return route.split("/")[-2]
 
 class PersonItem(scrapy.Item):
-    brand = scrapy.Field()
     name = scrapy.Field()
-
+    brand = scrapy.Field(
+        input_processor=MapCompose(lambda brand: brand.split('/')[-3]), 
+        output_processor=TakeFirst()
+    ) 
     rating = scrapy.Field(
         input_processor=MapCompose(lambda stars: (stars.count('icon-star-full-fill') * 1) + (stars.count('icon-star-half-empty') * 0.5)), 
         output_processor=TakeFirst()

@@ -19,14 +19,12 @@ class CardekhoSpider(CrawlSpider):
             yield scrapy.Request(url, callback=self.parse_car)
 
     def parse_car(self, response):
-        brand = response.url.split('/')[-3]
+        brand = response.url
         name = response.css('div.title a::text').get()
         for review in response.css('section.ReadReview div.gsc-ta-active li div.readReviewHolder'):
             loader = ItemLoader(item = PersonItem(), selector=review)
-
             loader.add_value('brand', brand)
             loader.add_value('name', name)
-
             loader.add_css('review_username', '.authorSummary .name')
             loader.add_css('review_title', 'h3 a::text')
             loader.add_css('review_content', 'p span::text')
