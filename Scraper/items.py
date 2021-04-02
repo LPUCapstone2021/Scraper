@@ -1,30 +1,29 @@
-# Define here the models for your scraped items
-#
-# See documentation in:
-# https://docs.scrapy.org/en/latest/topics/items.html
-
 import scrapy
+from itemloaders.processors import TakeFirst, MapCompose, Join
+from w3lib.html import remove_tags, replace_escape_chars
+import re
 
 def extract_brand(route):
 	return route.split("/")[-2]
 
-def extract_rating(stars):
-    rating = []
-    for star in stars:
-        if star.css('span').xpath('@class').re(r'icon-star-full-fill'):
-            rating.append(1)
-        elif star.css('span').xpath('@class').re(r'icon-star-half-empty'):
-            rating.append(0.5)
-        elif star.css('span').xpath('@class').re(r'icon-star-full-empty'):
-            rating.append(0)               
-    return rating[1::]
+class PersonItem(scrapy.Item):
+    brand = scrapy.Field()
+    name = scrapy.Field()
 
-class ScraperItem(scrapy.Item):
-	brand = scrapy.Field()
-	reviews = scrapy.Field()
-	name = scrapy.Field()
-
-	review_title = scrapy.Field()
-	review_content = scrapy.Field()
-	review_user = scrapy.Field()
-	review_date = scrapy.Field()
+    rating = scrapy.Field(
+        input_processor=MapCompose(lambda stars: (stars.count('icon-star-full-fill') * 1) + (stars.count('icon-star-half-empty') * 0.5)), 
+        output_processor=TakeFirst()
+    )    
+    review_title = scrapy.Field()
+    review_content = scrapy.Field(
+        input_processor=MapCompose(replace_escape_chars), 
+        output_processor=TakeFirst()
+    )    
+    review_username = scrapy.Field(
+        input_processor=MapCompose(remove_tags, lambda username: username[3:]), 
+        output_processor=TakeFirst()
+    )
+    review_date = scrapy.Field(
+        input_processor=MapCompose(remove_tags, lambda date: date.split("|")[0].strip()), 
+        output_processor=TakeFirst()
+    )

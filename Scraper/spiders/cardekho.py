@@ -1,8 +1,8 @@
 import scrapy
+from scrapy.loader import ItemLoader
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
-from Scraper.items import ScraperItem
-from w3lib.html import remove_tags
+from Scraper.items import PersonItem
 
 class CardekhoSpider(CrawlSpider):
     name = 'cardekho'
@@ -14,24 +14,22 @@ class CardekhoSpider(CrawlSpider):
     )
 
     def parse_brand(self, response):
-        item = ScraperItem()
         for car_route in response.css('section.BrandPagelist li .listView h3 a::attr(href)').getall():
             url = response.urljoin(f'{car_route}/user-reviews')
-            yield scrapy.Request(url, callback=self.parse_car, cb_kwargs={'item': item})
+            yield scrapy.Request(url, callback=self.parse_car)
 
-    def parse_car(self, response, item):
-        item['brand'] = response.url.split('/')[-3]
-        item['name'] = response.css('div.title a::text').get()
+    def parse_car(self, response):
+        brand = response.url.split('/')[-3]
+        name = response.css('div.title a::text').get()
         for review in response.css('section.ReadReview div.gsc-ta-active li div.readReviewHolder'):
-            # item['reviews'] = {
-            #     'title': review.css('h3 a::text').get(),
-            #     'content': review.css('p::text').get(),
-            #     'user': remove_tags(review.css('.authorSummary .name').get())[3:],
-            #     'date': remove_tags(review.css('.authorSummary .date').get()).split("|")[0].strip()
-            # }
-            # item['rating'] = extract_rating(review.css('div.rating span'))
-            item['review_title'] = review.css('h3 a::text').get()
-            item['review_content'] = review.css('p::text').get().strip("\n")
-            item['review_user'] = remove_tags(review.css('.authorSummary .name').get())[3:]
-            item['review_date'] = remove_tags(review.css('.authorSummary .date').get()).split("|")[0].strip()
-        yield item
+            loader = ItemLoader(item = PersonItem(), selector=review)
+
+            loader.add_value('brand', brand)
+            loader.add_value('name', name)
+
+            loader.add_css('review_username', '.authorSummary .name')
+            loader.add_css('review_title', 'h3 a::text')
+            loader.add_css('review_content', 'p span::text')
+            loader.add_css('review_date', '.authorSummary .date')
+            loader.add_css('rating', 'div.rating span')
+            yield loader.load_item()
