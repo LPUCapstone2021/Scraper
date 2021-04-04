@@ -24,7 +24,6 @@ $ docker start capstone-scraper
 $ docker exec -it capstone-scraper bash
 ```
 ```bash
-$ cd Scraper
 $ scrapy crawl cardekho -o data/cars.csv
 ```
 
