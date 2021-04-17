@@ -1,19 +1,17 @@
 # Scraper
 
 ## Setup
-### Build Image
 ```bash
+$ # build docker image
 $ docker build --tag scraper .
-```
-### Execute Container
-```bash
+
+$ # execute container
 $ docker run --interactive --tty \
 --name capstone-scraper \
 --mount type=bind,source=`pwd`,target=/app \
 scraper
-```
-### Create Spider(s)
-```bash
+
+$ # create spider(s)
 $ scrapy startproject Scraper
 $ cd Scraper
 $ scrapy genspider -t crawl cardekho cardekho.com
