@@ -19,11 +19,7 @@ $ scrapy genspider -t crawl cardekho cardekho.com
 # Run crawler
 ```bash
 $ docker start capstone-scraper
-```
-```bash
 $ docker exec -it capstone-scraper bash
-```
-```bash
 $ scrapy crawl cardekho -o data/cars.csv
 ```
 
