@@ -1,15 +1,18 @@
 # Scraper
 
 # Setup
+### Build Image
 ```bash
 $ docker build --tag scraper .
 ```
+### Execute Container
 ```bash
 $ docker run --interactive --tty \
 --name capstone-scraper \
 --mount type=bind,source=`pwd`,target=/app \
 scraper
 ```
+### Run Spider
 ```bash
 $ scrapy startproject Scraper
 $ cd Scraper
