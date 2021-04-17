@@ -27,6 +27,8 @@ $ docker exec -it capstone-scraper bash
 $ scrapy crawl cardekho -o data/cars.csv
 ```
 
+# Clean data
+Open [clean.ipynb](./clean.ipynb) in Google Colab and use `cars.csv` present in `Scraper/spiders/data` as input.
 
 <!-- TODOs
 	make High Anonymity Proxies middleware
