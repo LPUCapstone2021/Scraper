@@ -12,7 +12,7 @@ $ docker run --interactive --tty \
 --mount type=bind,source=`pwd`,target=/app \
 scraper
 ```
-### Run Spider
+### Create Spider(s)
 ```bash
 $ scrapy startproject Scraper
 $ cd Scraper
