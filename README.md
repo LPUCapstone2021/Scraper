@@ -1,6 +1,6 @@
 # Scraper
 
-# Setup
+## Setup
 ### Build Image
 ```bash
 $ docker build --tag scraper .
@@ -19,14 +19,14 @@ $ cd Scraper
 $ scrapy genspider -t crawl cardekho cardekho.com
 ```
 
-# Run crawler
+## Run crawler
 ```bash
 $ docker start capstone-scraper
 $ docker exec -it capstone-scraper bash
 $ scrapy crawl cardekho -o data/cars.csv
 ```
 
-# Clean data
+## Clean data
 Open [clean.ipynb](./clean.ipynb) in Google Colab and use `cars.csv` present in `Scraper/spiders/data` as input.
 
 <!-- TODOs
