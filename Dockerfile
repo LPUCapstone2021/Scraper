@@ -15,6 +15,6 @@ SHELL ["/bin/bash", "-c"]
 USER root
 
 # Install Scraping Dependencies
-RUN pip install scrapy
+RUN pip install -r requirements.txt
 
 CMD ["/bin/bash"]

@@ -15,13 +15,15 @@ $ # create spider(s)
 $ scrapy startproject Scraper
 $ cd Scraper
 $ scrapy genspider -t crawl cardekho cardekho.com
+$ scrapy genspider -t crawl zigwheels zigwheels.com
 ```
 
 ## Run crawler
 ```bash
 $ docker start capstone-scraper
 $ docker exec -it capstone-scraper bash
-$ scrapy crawl cardekho -o data/cars.csv
+$ scrapy crawl cardekho -o data/data.csv
+$ scrapy crawl zigwheels -o data/data.csv
 ```
 
 ## Clean data

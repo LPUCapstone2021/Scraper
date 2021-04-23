@@ -1,9 +1,9 @@
-import re
 import scrapy
 from scrapy.loader import ItemLoader
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
-from Scraper.items import PersonItem
+
+from Scraper.items import Person
 
 class CardekhoSpider(CrawlSpider):
     name = 'cardekho'
@@ -35,7 +35,7 @@ class CardekhoSpider(CrawlSpider):
     def parse_user(self, response):
         car = response.meta['car']
         for review in response.css('section.ReadReview div.gsc-ta-active li div.readReviewHolder'):
-            loader = ItemLoader(item = PersonItem(), selector=review)
+            loader = ItemLoader(item = Person(), selector=review)
             loader.add_value('brand', car['brand'])
             loader.add_value('name', car['name'])
             loader.add_value('price', car['price'])

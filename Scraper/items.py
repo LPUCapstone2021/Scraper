@@ -2,7 +2,10 @@ import scrapy
 from itemloaders.processors import TakeFirst, MapCompose
 from w3lib.html import remove_tags, replace_escape_chars
 
-class PersonItem(scrapy.Item):
+class Car(scrapy.Item):
+    rating = scrapy.Field()
+
+class Person(scrapy.Item):
     name = scrapy.Field()
     description = scrapy.Field()
     standout_features = scrapy.Field()    
