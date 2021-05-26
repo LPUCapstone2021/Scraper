@@ -1,4 +1,4 @@
-import scrapy
+ import scrapy
 from scrapy.loader import ItemLoader
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
@@ -19,9 +19,9 @@ class ZigwheelsSpider(CrawlSpider):
     def parse_car(self, response):
         for route in response.xpath('//*[@id="modelList"]/li/div/div[1]/a/@href'):
             url = response.urljoin(route.get())
-            yield scrapy.Request(url, callback=self.parse_car_specs)
+            yield scrapy.Request(url, callback=self.parse_car_rating)
 
-    def parse_car_specs(self, response):
+    def parse_car_rating(self, response):
         loader = ItemLoader(item = ZigwheelsItem())
 
         rating = {}
